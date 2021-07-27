@@ -24,6 +24,8 @@ data class WeatherData(
     val visibility:Long,
     @SerializedName("wind_speed")val windSPeed:Double,
     @SerializedName("wind_deg") val windDegree:Long,
+    @SerializedName("uvi") val uvIndex:Double,
+    @SerializedName("dew_point") val dewPoint:Double,
     val weather:List<Weather>
 
 )

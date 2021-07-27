@@ -16,6 +16,9 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
     val data = MutableLiveData<OneCallWeatherResponse>()
     val loading = MutableLiveData<Boolean>()
     var job:Job? =  null
+    init {
+        getWeather()
+    }
     fun getWeather(){
         loading.value = true
         job = CoroutineScope(Dispatchers.IO).launch {

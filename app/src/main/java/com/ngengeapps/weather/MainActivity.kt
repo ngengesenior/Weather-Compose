@@ -6,11 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ngengeapps.weather.ui.CurrentConditionUI
 import com.ngengeapps.weather.ui.theme.WeatherTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -36,26 +36,32 @@ class MainActivity : ComponentActivity() {
             }
         }*/
         setContent {
-            viewModel.getWeather()
             WeatherTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    WeatherUI(viewModel = viewModel)
                 }
             }
         }
     }
 }
 
+
+
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun WeatherUI(viewModel:WeatherViewModel) {
+    val response by viewModel.data.observeAsState()
+    response?.current?.let {
+        CurrentConditionUI(weatherData = it)
+    }
+    //CurrentConditionUI(weatherData = response?.current)
+
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     WeatherTheme {
-        Greeting("Android")
+
     }
 }

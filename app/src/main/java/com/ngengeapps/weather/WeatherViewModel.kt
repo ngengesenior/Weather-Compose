@@ -1,12 +1,17 @@
 package com.ngengeapps.weather
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ngengeapps.weather.data.models.OneCallWeatherResponse
 import com.ngengeapps.weather.data.repository.WeatherRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class WeatherViewModel(private val repository: WeatherRepository):ViewModel() {
+@HiltViewModel
+class WeatherViewModel @Inject constructor(private val repository: WeatherRepository):ViewModel() {
+
     val errorMessage = MutableLiveData<String>()
     val data = MutableLiveData<OneCallWeatherResponse>()
     val loading = MutableLiveData<Boolean>()
@@ -18,9 +23,11 @@ class WeatherViewModel(private val repository: WeatherRepository):ViewModel() {
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful){
                     data.value = response.body()!!
+                    Log.d(TAG, "getWeather: ${response.body()}")
                     loading.value = false
                 } else {
                     onErrorMessage("Error: ${response.message()}")
+                    Log.e(TAG, "getWeather: ${response.message()}")
                 }
 
             }

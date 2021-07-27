@@ -62,6 +62,8 @@ dependencies {
     //lifecycle and viemodel
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha02"
+
     implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
     //Paging compose
     implementation "androidx.paging:paging-compose:1.0.0-alpha12"

@@ -8,11 +8,20 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.ngengeapps.weather.data.remote.WeatherRetrofitService
 import com.ngengeapps.weather.ui.theme.WeatherTheme
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        GlobalScope.launch {
+
+        }
         setContent {
             WeatherTheme {
                 // A surface container using the 'background' color from the theme

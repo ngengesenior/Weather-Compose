@@ -17,7 +17,7 @@ interface WeatherRetrofitService {
     @GET("onecall")
     suspend fun oneAPICall(@Query("lat") latitude:Double = bueaLat ,
                            @Query("lon") longitude:Double = bueaLon,
-                           @Query("appid") apiKey:String):Response<OneCallWeatherResponse>
+                           @Query("appid") apiKey:String = testAPIKey):Response<OneCallWeatherResponse>
 
 
 
@@ -25,6 +25,7 @@ interface WeatherRetrofitService {
         const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
         val bueaLat = 4.1560
         val bueaLon = 9.2632
+        val testAPIKey = "d863477b1f9767da6d0a4e9a95ee37a9"
 
 
         private fun create(httpUrl: HttpUrl):WeatherRetrofitService {

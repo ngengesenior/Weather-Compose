@@ -1,6 +1,7 @@
 package com.ngengeapps.weather
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
@@ -13,7 +14,9 @@ import com.ngengeapps.weather.ui.theme.WeatherTheme
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
+const val TAG = "AppTag"
 class MainActivity : ComponentActivity() {
     @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +24,13 @@ class MainActivity : ComponentActivity() {
 
         GlobalScope.launch {
 
+            val retrofitService = WeatherRetrofitService.create()
+            try {
+                val data = retrofitService.oneAPICall()
+                Log.d(TAG, "onCreate: ${data.body()}")
+            }catch (ex:Exception) {
+                Log.e(TAG, "onCreate: ${ex.message}")
+            }
         }
         setContent {
             WeatherTheme {

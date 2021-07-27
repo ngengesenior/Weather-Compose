@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class OneCallWeatherResponse(
     @SerializedName("lat") val latitude: Double,
     @SerializedName("lon") val longitude: Double,
-    val timeZone: String,
+    val timeZone: String?,
     @SerializedName("timezone_offset")val timezoneOffset:Long,
     val current: WeatherData,
     val hourly:List<WeatherData>,
@@ -22,7 +22,7 @@ data class WeatherData(
     val pressure:Long,
     val humidity:Long,
     val visibility:Long,
-    @SerializedName("wind_speed")val windSPeed:Long,
+    @SerializedName("wind_speed")val windSPeed:Double,
     @SerializedName("wind_deg") val windDegree:Long,
     val weather:List<Weather>
 

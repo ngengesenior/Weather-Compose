@@ -23,8 +23,8 @@ interface WeatherRetrofitService {
 
     companion object {
         const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
-        val bueaLat = 4.1560
-        val bueaLon = 9.2632
+        val bueaLat = 37.422065599999996
+        val bueaLon = -122.0840897
         val testAPIKey = "d863477b1f9767da6d0a4e9a95ee37a9"
 
 

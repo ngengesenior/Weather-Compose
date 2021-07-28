@@ -8,7 +8,7 @@ data class OneCallWeatherResponse(
     val timeZone: String?,
     @SerializedName("timezone_offset")val timezoneOffset:Long,
     val current: WeatherData,
-    val hourly:List<WeatherData>,
+    val hourly:List<WeatherData> = listOf(),
     val daily:List<DailyWeather>
 )
 
@@ -60,6 +60,10 @@ open class FeelsLikeDay(
     val night: Double,
     @SerializedName("eve")val evening: Double,
     @SerializedName("morn") val morning: Double
+)
+data class Coordinates(
+    val latitude: Double,
+    val longitude: Double
 )
 
 data class Weather(

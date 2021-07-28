@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class WeatherRepository @Inject constructor(private val retrofitService: WeatherRetrofitService) {
-    suspend fun getOneApiCall():Response<OneCallWeatherResponse> {
-        return retrofitService.oneAPICall()
+    suspend fun getOneApiCall(latitude:Double,longitude:Double):Response<OneCallWeatherResponse> {
+        return retrofitService.oneAPICall(latitude,longitude)
     }
 }

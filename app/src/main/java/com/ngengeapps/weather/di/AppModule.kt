@@ -5,6 +5,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import javax.inject.Singleton
 
 @Module
@@ -14,5 +16,9 @@ class AppModule {
     @Singleton
     @Provides
     fun provideWeatherService():WeatherRetrofitService = WeatherRetrofitService.create()
+
+    @Singleton
+    @Provides
+    fun provideHourMinuteDateFormat():DateFormat = SimpleDateFormat("HH:mm")
 
 }

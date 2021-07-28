@@ -21,6 +21,10 @@ fun getDateFormat():DateFormat {
 
 }
 
+fun getEnglishDateFormat():DateFormat {
+    return SimpleDateFormat("EEE, d MMM",Locale.getDefault())
+}
+
 fun Context.openSettings() {
 
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -35,4 +39,8 @@ fun getHourAndMinuteFromTimeStampAndOffSet(
     offset:Long
 ):String {
     return getDateFormat().format(Date(timestamp+offset))
+}
+
+fun getReadableEnglishDate(timestamp: Long):String {
+    return getEnglishDateFormat().format(Date(timestamp))
 }

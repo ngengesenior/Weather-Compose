@@ -17,7 +17,8 @@ interface WeatherRetrofitService {
     @GET("onecall")
     suspend fun oneAPICall(@Query("lat") latitude:Double = bueaLat ,
                            @Query("lon") longitude:Double = bueaLon,
-                           @Query("appid") apiKey:String = testAPIKey):Response<OneCallWeatherResponse>
+                           @Query("appid") apiKey:String = testAPIKey,
+    @Query("units") units:String = "metric"):Response<OneCallWeatherResponse>
 
 
 

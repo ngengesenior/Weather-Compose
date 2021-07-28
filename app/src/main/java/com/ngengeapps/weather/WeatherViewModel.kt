@@ -2,12 +2,14 @@ package com.ngengeapps.weather
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.location.Geocoder
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.location.LocationServices
 import com.ngengeapps.weather.data.models.Coordinates
+import com.ngengeapps.weather.data.models.DailyWeather
 import com.ngengeapps.weather.data.models.OneCallWeatherResponse
 import com.ngengeapps.weather.data.models.WeatherData
 import com.ngengeapps.weather.data.repository.WeatherRepository
@@ -18,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(private val repository: WeatherRepository,
-                                           @ApplicationContext context:Context):ViewModel() {
+                                           @ApplicationContext context:Context,val geocoder: Geocoder):ViewModel() {
     private var fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
 
@@ -28,6 +30,7 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
     val currentWeatherData = MutableLiveData<WeatherData>()
     val timeZoneOffset = MutableLiveData<Long>(0)
     val loading = MutableLiveData<Boolean>()
+    val sevenDaysWeather = MutableLiveData<List<DailyWeather>>()
     val coordinates = MutableLiveData<Coordinates>()
     var job:Job? =  null
     init {
@@ -46,7 +49,7 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
                     timeZoneOffset.value = responseBody.timezoneOffset
                     hoursList.value = response.body()!!.hourly
                     currentWeatherData.value = responseBody.current
-
+                    sevenDaysWeather.value = responseBody.daily
                     loading.value = false
                 } else {
                     onErrorMessage("Error: ${response.message()}")
@@ -84,6 +87,25 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
         }.addOnFailureListener {
             onErrorMessage("${it.message}")
         }
+    }
+
+    fun getCoordinatesFromCityNameAndGetWeather(cityName:String) {
+        loading.value = true
+        try {
+            val locations = geocoder.getFromLocationName(cityName,1)
+            if (locations.isNotEmpty()) {
+                val loc = locations[0]
+                val coords = Coordinates(loc.latitude,loc.longitude)
+                getWeather(coords)
+            } else {
+                onErrorMessage("No valid location was found")
+
+            }
+        } catch (ex:Exception) {
+
+            onErrorMessage("Error:${ex.message}")
+        }
+
     }
 
 }

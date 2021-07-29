@@ -21,7 +21,7 @@ data class WeatherData(
     @SerializedName("feels_like") val feelsLike:Double,
     val pressure:Long,
     val humidity:Long,
-    val visibility:Long,
+    val visibility:Double,
     @SerializedName("wind_speed")val windSPeed:Double,
     @SerializedName("wind_deg") val windDegree:Long,
     @SerializedName("uvi") val uvIndex:Double,

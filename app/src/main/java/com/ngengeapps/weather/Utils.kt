@@ -38,9 +38,9 @@ fun getHourAndMinuteFromTimeStampAndOffSet(
     timestamp:Long,
     offset:Long
 ):String {
-    return getDateFormat().format(Date(timestamp+offset))
+    return getDateFormat().format(Date((timestamp+offset) * 1000))
 }
 
-fun getReadableEnglishDate(timestamp: Long):String {
-    return getEnglishDateFormat().format(Date(timestamp))
+fun getReadableEnglishDate(seconds: Long):String {
+    return getEnglishDateFormat().format(Date(seconds * 1000))
 }

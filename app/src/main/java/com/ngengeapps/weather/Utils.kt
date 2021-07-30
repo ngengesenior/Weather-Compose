@@ -10,9 +10,8 @@ import java.util.*
 
 const val ICON_BASE_URL ="https://openweathermap.org/img/wn/"
 fun getWeatherIcon(icon:String) = "$ICON_BASE_URL$icon@2x.png"
-val hourMinuteDateFormat:DateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-fun getDateFormat():DateFormat {
+fun getHourAndMinuteFormat():DateFormat {
     val hourMinuteDateFormat:DateFormat = SimpleDateFormat("HH:mm")
     hourMinuteDateFormat.timeZone = TimeZone.getTimeZone("GMT")
     return hourMinuteDateFormat
@@ -36,7 +35,7 @@ fun getHourAndMinuteFromTimeStampAndOffSet(
     timestamp:Long,
     offset:Long
 ):String {
-    return getDateFormat().format(Date((timestamp+offset) * 1000))
+    return getHourAndMinuteFormat().format(Date((timestamp+offset) * 1000))
 }
 
 fun getReadableEnglishDate(seconds: Long,offset: Long):String {

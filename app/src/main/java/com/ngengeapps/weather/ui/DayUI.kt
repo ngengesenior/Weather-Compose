@@ -1,6 +1,4 @@
 package com.ngengeapps.weather.ui
-
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
@@ -17,12 +15,13 @@ import com.ngengeapps.weather.getReadableEnglishDate
 import kotlin.math.roundToInt
 
 @Composable
-fun DailyUIList(dailyList:List<DailyWeather>, timeZoneOffset:Long,onNavigateToDetail:(DailyWeather,Long)->Unit){
-    Log.d("APPTag", "HourlyUIList: $dailyList")
+fun DailyUIList(dailyList:List<DailyWeather>,
+                timeZoneOffset:Long,onNavigateToDetail:(DailyWeather,Long)->Unit){
+
+
     Column(modifier = Modifier
         .fillMaxWidth()
     ) {
-
         dailyList.forEach {
             val time = getReadableEnglishDate(it.dt,timeZoneOffset)
             DayUIItem(modifier = Modifier.clickable {
@@ -36,9 +35,8 @@ fun DailyUIList(dailyList:List<DailyWeather>, timeZoneOffset:Long,onNavigateToDe
 
 @Composable
 fun DayUIItem(modifier: Modifier = Modifier,dailyWeather: DailyWeather, timeText:String) {
-
     Surface(modifier = modifier.padding(vertical = 16.dp,horizontal = 3.dp)) {
-        Row() {
+        Row{
             Text(text = timeText)
             Spacer(modifier = Modifier.weight(1f))
             Text(text = "${dailyWeather.temperature.max.roundToInt()}" + "/"+ "${dailyWeather.temperature.min.roundToInt()}°C")

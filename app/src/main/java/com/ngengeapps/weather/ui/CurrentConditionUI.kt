@@ -23,7 +23,7 @@ import kotlin.math.roundToInt
 @Composable
 fun CurrentConditionUI(weatherData: WeatherData){
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        MainConditionUI(weather = weatherData.weather[0],modifier = Modifier.fillMaxWidth())
+        MainConditionUI(weather = weatherData.weather[0])
         Text(text = stringResource(R.string.temperature,weatherData.temperature.roundToInt()) ,fontWeight = FontWeight.Bold,textAlign = TextAlign.Center,fontSize = 40.sp)
         Spacer(modifier = Modifier.height(4.dp))
         Text(text = stringResource(R.string.feels_like,weatherData.feelsLike.roundToInt()) ,style = MaterialTheme.typography.caption,fontSize = 10.sp)
@@ -33,8 +33,12 @@ fun CurrentConditionUI(weatherData: WeatherData){
 
 }
 
+/**
+ * Essentially, this is top screen and has weather data for the current day which includes
+ * main weather, condition description and icon
+ */
 @Composable
-fun MainConditionUI(weather: Weather, modifier: Modifier = Modifier) {
+fun MainConditionUI(weather: Weather) {
     Row(verticalAlignment = Alignment.Top) {
         WeatherIcon(icon = weather.icon, size = 60.dp )
         Column(modifier = Modifier.padding(top = 10.dp)) {

@@ -1,12 +1,12 @@
 package com.ngengeapps.weather.ui
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.ngengeapps.weather.WeatherViewModel
 
 sealed class Screen(val route:String) {
     object Home:Screen("home")
@@ -15,14 +15,23 @@ sealed class Screen(val route:String) {
 }
 
 
+@ExperimentalAnimationApi
+@ExperimentalPermissionsApi
 @Composable
 fun AppNavigation(
     navController: NavHostController,
-    openSettings:()->Unit
-) {
-    NavHost(navController  =navController,startDestination = Screen.Home.route){
-        composable(Screen.Home.route){
+    viewModel:WeatherViewModel
 
+) {
+    NavHost(startDestination = Screen.Home.route,
+        navController = navController){
+
+        composable(Screen.Home.route){
+            WeatherUI(viewModel = viewModel, navController)
+        }
+
+        composable(Screen.DayDetails.route){
+            DayDetailUI(navController = navController,viewModel = viewModel)
         }
     }
 }

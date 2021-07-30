@@ -1,5 +1,3 @@
-package com.ngengeapps.weather.ui
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -17,16 +15,18 @@ import androidx.compose.ui.unit.sp
 import com.ngengeapps.weather.R
 import com.ngengeapps.weather.data.models.Weather
 import com.ngengeapps.weather.data.models.WeatherData
-
+import com.ngengeapps.weather.ui.BoldText
+import com.ngengeapps.weather.ui.WeatherIcon
+import kotlin.math.roundToInt
 
 
 @Composable
 fun CurrentConditionUI(weatherData: WeatherData){
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         MainConditionUI(weather = weatherData.weather[0],modifier = Modifier.fillMaxWidth())
-        Text(text = "${weatherData.temperature}°C",fontWeight = FontWeight.Bold,textAlign = TextAlign.Center,fontSize = 40.sp)
+        Text(text = stringResource(R.string.temperature,weatherData.temperature.roundToInt()) ,fontWeight = FontWeight.Bold,textAlign = TextAlign.Center,fontSize = 40.sp)
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = "Feels like ${weatherData.feelsLike}°C",style = MaterialTheme.typography.caption,fontSize = 10.sp)
+        Text(text = stringResource(R.string.feels_like,weatherData.feelsLike.roundToInt()) ,style = MaterialTheme.typography.caption,fontSize = 10.sp)
         Spacer(modifier = Modifier.height(45.dp))
         GeneralWeatherInfoUI(currentWeather = weatherData)
     }
@@ -34,7 +34,7 @@ fun CurrentConditionUI(weatherData: WeatherData){
 }
 
 @Composable
-fun MainConditionUI(weather:Weather,modifier: Modifier = Modifier) {
+fun MainConditionUI(weather: Weather, modifier: Modifier = Modifier) {
     Row(verticalAlignment = Alignment.Top) {
         WeatherIcon(icon = weather.icon, size = 60.dp )
         Column(modifier = Modifier.padding(top = 10.dp)) {
@@ -44,42 +44,52 @@ fun MainConditionUI(weather:Weather,modifier: Modifier = Modifier) {
     }
 }
 
+
+
+
 @Composable
-fun GeneralWeatherInfoUI(currentWeather:WeatherData) {
-    Surface(shape = RoundedCornerShape(8.dp),color = Color.LightGray,
-    modifier = Modifier.padding(horizontal = 4.dp)) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 20.dp, horizontal = 8.dp)
+fun GeneralWeatherInfoUI(currentWeather: WeatherData) {
+    Surface(
+        shape = RoundedCornerShape(8.dp), color = Color.LightGray,
+        modifier = Modifier.padding(horizontal = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp, horizontal = 8.dp)
         ) {
-            
-            Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
-                BoldText(text = stringResource(R.string.wind_text,currentWeather.windSPeed,currentWeather.windDegree))
-                BoldText(text = stringResource(R.string.humidity,currentWeather.humidity))
-                BoldText(text = stringResource(R.string.uv_index,currentWeather.uvIndex))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                BoldText(
+                    text = stringResource(
+                        R.string.wind_text,
+                        currentWeather.windSPeed,
+                        currentWeather.windDegree
+                    )
+                )
+                BoldText(text = stringResource(R.string.humidity, currentWeather.humidity) + "%")
+                BoldText(text = stringResource(R.string.uv_index, currentWeather.uvIndex))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-            Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
-                BoldText(text = stringResource(R.string.pressure_pascal,currentWeather.pressure))
-                BoldText(text = stringResource(R.string.visibility_km,currentWeather.visibility))
-                BoldText(text = stringResource(R.string.dew_point_celcius,currentWeather.dewPoint))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                BoldText(text = stringResource(R.string.pressure_pascal, currentWeather.pressure))
+                BoldText(
+                    text = stringResource(
+                        R.string.visibility_km,
+                        currentWeather.visibility.div(1000)
+                    )
+                )
+                BoldText(text = stringResource(R.string.dew_point_celcius, currentWeather.dewPoint))
             }
-
 
 
         }
     }
-
-    
-    
 }
-
-
-
-
-
-
-
-
-

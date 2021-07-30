@@ -6,8 +6,6 @@ import android.net.Uri
 import android.provider.Settings
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
 import java.util.*
 
 const val ICON_BASE_URL ="https://openweathermap.org/img/wn/"
@@ -41,6 +39,7 @@ fun getHourAndMinuteFromTimeStampAndOffSet(
     return getDateFormat().format(Date((timestamp+offset) * 1000))
 }
 
-fun getReadableEnglishDate(seconds: Long):String {
-    return getEnglishDateFormat().format(Date(seconds * 1000))
+fun getReadableEnglishDate(seconds: Long,offset: Long):String {
+    return getEnglishDateFormat().format(Date((seconds+offset) * 1000))
 }
+

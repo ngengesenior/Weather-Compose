@@ -1,5 +1,6 @@
 package com.ngengeapps.weather
 
+import CurrentConditionUI
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,11 +23,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.ngengeapps.weather.ui.CurrentConditionUI
-import com.ngengeapps.weather.ui.DailyUIList
-import com.ngengeapps.weather.ui.HourlyUIList
-import com.ngengeapps.weather.ui.LocationPermissionUI
+import com.ngengeapps.weather.data.models.DailyWeather
+import com.ngengeapps.weather.ui.*
 import com.ngengeapps.weather.ui.theme.WeatherTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -55,9 +60,22 @@ class MainActivity : ComponentActivity() {
         }*/
         setContent {
             WeatherTheme {
+                val navController = rememberNavController()
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    WeatherUI(viewModel = viewModel)
+
+                    NavHost(startDestination = Screen.Home.route,
+                        navController = navController){
+
+                        composable(Screen.Home.route){
+                            WeatherUI(viewModel = viewModel, navController)
+                        }
+
+                        composable(Screen.DayDetails.route){
+                            DayDetailUI(navController = navController,viewModel = viewModel)
+                        }
+                    }
+                    //WeatherUI(viewModel = viewModel)
                 }
             }
         }
@@ -69,8 +87,8 @@ class MainActivity : ComponentActivity() {
 @ExperimentalPermissionsApi
 @ExperimentalAnimationApi
 @Composable
-fun WeatherUI(viewModel:WeatherViewModel) {
-
+fun WeatherUI(viewModel:WeatherViewModel,
+              navController: NavController) {
 
     var city by remember {
         mutableStateOf("")
@@ -81,7 +99,6 @@ fun WeatherUI(viewModel:WeatherViewModel) {
     val hoursList by viewModel.hoursList.observeAsState(null)
     val sevenDaysWeather by viewModel.sevenDaysWeather.observeAsState(null)
     val timeZoneOffset by viewModel.timeZoneOffset.observeAsState(0)
-
     Column(modifier = Modifier.fillMaxSize()) {
 
         SearchField(city = city, onValueChange = {
@@ -131,7 +148,12 @@ fun WeatherUI(viewModel:WeatherViewModel) {
                         CenteredProgressBar(modifier = Modifier.fillMaxWidth())
                     }
                     AnimatedVisibility(visible = hoursList != null) {
-                        DailyUIList(dailyList = sevenDaysWeather!!, timeZoneOffset = timeZoneOffset)
+                        DailyUIList(dailyList = sevenDaysWeather!!, timeZoneOffset = timeZoneOffset,onNavigateToDetail = { dailyWeather: DailyWeather, l: Long ->
+                            viewModel.selectDayDetails(dailyWeather)
+                            viewModel.selectOffset(l)
+                            navController.navigate(Screen.DayDetails.route)
+
+                        })
                     }
 
                 }
@@ -156,14 +178,6 @@ fun DefaultPreview() {
     }
 }
 
-@Composable
-fun CenteredProgressBar(modifier: Modifier = Modifier) {
-    Column(modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center) {
-        CircularProgressIndicator()
-    }
-}
 
 
 @Composable

@@ -24,6 +24,9 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
     private var fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
 
+    var selectedDayWeather:DailyWeather? = null
+    var selectedOffset:Long? = null
+
     val errorMessage = MutableLiveData<String>()
     val data = MutableLiveData<OneCallWeatherResponse>()
     val hoursList = MutableLiveData<List<WeatherData>>()
@@ -106,6 +109,14 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
             onErrorMessage("Error:${ex.message}")
         }
 
+    }
+
+    fun selectDayDetails(dailyWeather: DailyWeather){
+        selectedDayWeather = dailyWeather
+    }
+
+    fun selectOffset(offset:Long) {
+        selectedOffset = offset
     }
 
 }

@@ -1,6 +1,7 @@
 package com.ngengeapps.weather.ui
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -13,17 +14,20 @@ import androidx.compose.ui.unit.dp
 import com.ngengeapps.weather.R
 import com.ngengeapps.weather.data.models.DailyWeather
 import com.ngengeapps.weather.getReadableEnglishDate
+import kotlin.math.roundToInt
 
 @Composable
-fun DailyUIList(dailyList:List<DailyWeather>, timeZoneOffset:Long){
+fun DailyUIList(dailyList:List<DailyWeather>, timeZoneOffset:Long,onNavigateToDetail:(DailyWeather,Long)->Unit){
     Log.d("APPTag", "HourlyUIList: $dailyList")
     Column(modifier = Modifier
         .fillMaxWidth()
     ) {
 
         dailyList.forEach {
-            val time = getReadableEnglishDate(it.dt)
-            DayUIItem(dailyWeather = it, timeText = time )
+            val time = getReadableEnglishDate(it.dt,timeZoneOffset)
+            DayUIItem(modifier = Modifier.clickable {
+                        onNavigateToDetail(it,timeZoneOffset)
+            } ,dailyWeather = it, timeText = time)
             Divider()
         }
 
@@ -31,13 +35,13 @@ fun DailyUIList(dailyList:List<DailyWeather>, timeZoneOffset:Long){
 }
 
 @Composable
-fun DayUIItem(dailyWeather: DailyWeather, timeText:String) {
+fun DayUIItem(modifier: Modifier = Modifier,dailyWeather: DailyWeather, timeText:String) {
 
-    Surface(modifier = Modifier.padding(vertical = 16.dp,horizontal = 3.dp)) {
+    Surface(modifier = modifier.padding(vertical = 16.dp,horizontal = 3.dp)) {
         Row() {
             Text(text = timeText)
             Spacer(modifier = Modifier.weight(1f))
-            Text(text = "${dailyWeather.temperature.max}" + "/"+ "${dailyWeather.temperature.min}°C")
+            Text(text = "${dailyWeather.temperature.max.roundToInt()}" + "/"+ "${dailyWeather.temperature.min.roundToInt()}°C")
             Spacer(modifier = Modifier.width(4.dp))
             WeatherIcon(icon = dailyWeather.weather[0].icon, size = 30.dp)
             Spacer(modifier = Modifier.width(4.dp))

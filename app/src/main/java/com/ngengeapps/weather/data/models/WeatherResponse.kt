@@ -40,10 +40,13 @@ data class DailyWeather(
     @SerializedName("feels_like")val feelsLikeDay: FeelsLikeDay,
     val pressure: Long,
     val humidity: Long,
+    @SerializedName("wind_speed")val windSPeed: Double,
+    @SerializedName("pop") val precipitationProbability:Double,
     @SerializedName("wind_deg")val windDegree: Long,
     val weather: List<Weather>,
     val rain:Double,
-    val clouds:Long
+    val clouds:Long,
+    @SerializedName("uvi") val uvIndex: Double
 
 )
 

@@ -1,13 +1,16 @@
 <resources>
     <string name="app_name">Weather</string>
     <string name="humidity">Humidity:%1$d</string>
-    <string name="temperature_celcius">Temperature:%1$f°C</string>
-    <string name="temperature_farenheight">Temperature:%1$f°F</string>
+    <string name="temperature_celcius">Temperature:%1$d°C</string>
+    <string name="temperature_farenheight">Temperature:%1$.2f°F</string>
     <string name="pressure_pascal">Pressure:%1$d hPa</string>
-    <string name="visibility_km">Visibility:%1$fkm</string>
-    <string name="dew_point_celcius">Dew point:%1$f°C</string>
+    <string name="visibility_km">Visibility:%1$.2f km</string>
+    <string name="dew_point_celcius">Dew point:%1$.2f°C</string>
     <string name="high_low_temp_celcius">%1$d/%2$d°C</string>
     <string name="temperature">%1$d°C</string>
-    <string name="wind_text">Wind:%1$f km/h %2$d</string>
-    <string name="uv_index">UV index:%1$f</string>
+    <string name="wind_text">Wind:%1$.1f km/h %2$d</string>
+    <string name="wind">%1$.1fkm/h %2$d°</string>
+    <string name="uv_index">UV index:%1$.2f</string>
+    <string name="feels_like">Feels Like %1$d°C</string>
+    <string name="precipitation">%1$.1fmm</string>
 </resources>

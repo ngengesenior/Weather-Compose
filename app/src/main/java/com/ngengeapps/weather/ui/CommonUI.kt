@@ -59,8 +59,9 @@ fun SearchField(city:String,onValueChange:(String) ->Unit,onSubmit:()->Unit) {
         Text(text = "Type City Name")
     } ,singleLine = true,value = city, onValueChange = onValueChange,
         keyboardActions = KeyboardActions(onDone = {
-            onSubmit.invoke()
             focusManager.clearFocus()
+            onSubmit.invoke()
+
         }),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text),
         leadingIcon = {

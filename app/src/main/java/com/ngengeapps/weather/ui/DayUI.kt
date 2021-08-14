@@ -16,7 +16,8 @@ import kotlin.math.roundToInt
 
 @Composable
 fun DailyUIList(dailyList:List<DailyWeather>,
-                timeZoneOffset:Long,onNavigateToDetail:(DailyWeather,Long)->Unit){
+                timeZoneOffset:Long,
+                onNavigateToDetail:(DailyWeather,Long)->Unit){
 
 
     Column(modifier = Modifier

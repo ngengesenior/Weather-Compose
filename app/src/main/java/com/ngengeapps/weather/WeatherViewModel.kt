@@ -89,6 +89,7 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
         }
     }
 
+
     fun getCoordinatesFromCityNameAndGetWeather(cityName:String) {
         loading.value = true
         //set error to null as well when we want to search for a new location
@@ -106,7 +107,7 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
             }
         } catch (ex:Exception) {
 
-            onErrorMessage("Error:${ex.message}")
+            onErrorMessage("Are you sure you searched a valid location?:${ex.message}")
         }
 
     }

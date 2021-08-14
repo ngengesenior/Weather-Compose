@@ -1,11 +1,13 @@
 package com.ngengeapps.weather.ui
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -17,13 +19,31 @@ import com.ngengeapps.weather.getHourAndMinuteFromTimeStampAndOffSet
 import kotlin.math.roundToInt
 
 
+@ExperimentalAnimationApi
 @Composable
 fun DayDetailUI(viewModel: WeatherViewModel,navController: NavController){
     val dailyWeather = viewModel.selectedDayWeather
     val timeZoneOffset = viewModel.timeZoneOffset.observeAsState()
+    val density = LocalDensity.current
 
     if (dailyWeather != null && timeZoneOffset.value != null) {
-        DayDetailUI(weather = dailyWeather, timeZoneOffset = timeZoneOffset.value!! )
+
+            AnimatedVisibility(visible = true,
+                enter = slideInHorizontally(initialOffsetX = {
+                    with(density){-40.dp.roundToPx()}
+                } )
+                        + expandVertically()
+                        + fadeIn(initialAlpha = 0.3f),
+                exit = slideOutHorizontally()
+                        + shrinkHorizontally()
+            + fadeOut()
+            ) {
+
+                DayDetailUI(weather = dailyWeather, timeZoneOffset = timeZoneOffset.value!! )
+            }
+
+
+
     } else {
         navController.popBackStack()
     }
@@ -31,7 +51,6 @@ fun DayDetailUI(viewModel: WeatherViewModel,navController: NavController){
 
 @Composable
 fun DayDetailUI(weather: DailyWeather,timeZoneOffset:Long) {
-    
     Column(modifier = Modifier.fillMaxSize()) {
 
         Row(modifier = Modifier.padding(horizontal = 4.dp)) {

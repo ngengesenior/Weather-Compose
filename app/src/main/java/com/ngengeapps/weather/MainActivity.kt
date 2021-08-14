@@ -8,6 +8,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ngengeapps.weather.ui.AppNavigation
 import com.ngengeapps.weather.ui.theme.WeatherTheme
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             WeatherTheme {
-                val navController = rememberNavController()
+                val navController = rememberAnimatedNavController()
 
                 Surface(color = MaterialTheme.colors.background) {
 

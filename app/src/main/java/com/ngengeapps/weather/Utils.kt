@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,4 +43,12 @@ fun getHourAndMinuteFromTimeStampAndOffSet(
 fun getReadableEnglishDate(seconds: Long,offset: Long):String {
     return getEnglishDateFormat().format(Date((seconds+offset) * 1000))
 }
+
+@ExperimentalAnimationApi
+val slideInAnimation =  slideInVertically(initialOffsetY = { -1000 }, animationSpec = tween(700)) + fadeIn()
+
+@ExperimentalAnimationApi
+val slideOutAnim =  slideOutVertically(targetOffsetY = { -1000 }, animationSpec = tween(700)) + fadeOut()
+
+
 
